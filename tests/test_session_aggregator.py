@@ -24,9 +24,10 @@ class TestSessionAggregator:
         assert row["typing_rate_mean"] == pytest.approx(4.0)
 
     def test_std_computed_correctly(self):
+        # pandas DataFrame.std() uses ddof=1 by default → std([2,4]) = sqrt(2) ≈ 1.414
         windows = [{"typing_rate": 2.0}, {"typing_rate": 4.0}]
         row = aggregate(windows, self._meta())
-        assert row["typing_rate_std"] == pytest.approx(1.0, rel=0.01)
+        assert row["typing_rate_std"] == pytest.approx(2**0.5, rel=0.01)
 
     def test_min_and_max(self):
         windows = [{"x": 1.0}, {"x": 5.0}, {"x": 3.0}]
