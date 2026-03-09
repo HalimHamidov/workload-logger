@@ -1,0 +1,56 @@
+# ============================================================
+# Workload Logger — Configuration
+# ============================================================
+# All tunable parameters in one place.
+# Do NOT hardcode these values in source files.
+# ============================================================
+
+logging:
+  window_size_seconds: 5           # W: length of each feature window
+  mouse_sample_rate_hz: 60         # max mouse move samples per second
+  trajectory_gap_threshold: 0.15   # τ: inactivity gap to split trajectory (seconds)
+  trajectory_min_duration: 0.5     # discard trajectories shorter than this (seconds)
+  trajectory_max_duration: 10.0    # discard trajectories longer than this (seconds)
+  trajectory_min_displacement: 10  # minimum pixels to compute efficiency
+
+deletion:
+  confidence_weights:
+    high: 1.0                      # plain Backspace / Delete
+    medium: 0.6                    # Ctrl+Backspace (word delete)
+    low: 0.3                       # selection-based deletion
+  word_length_rolling_window: 20   # rolling median word length buffer size
+  word_length_fallback: 5          # default word length if buffer is empty
+
+survey:
+  show_tlx_on: "min_session_minutes"   # options: on_sleep | on_manual_stop | min_session_minutes
+  min_session_minutes: 20              # show TLX only if session lasted this long
+  mini_tlx_interval_minutes: 2         # how often to show 2-question micro-survey
+  nasa_tlx_dimensions:
+    - Mental Demand
+    - Temporal Demand
+    - Own Performance
+    - Effort
+    - Frustration Level
+
+session:
+  autostart_on_wake: true              # start new session automatically after wake
+  show_tray_notifications: true
+  tray_icon_path: "assets/icon.png"
+
+ml:
+  alpha_grid: [0.01, 0.1, 1, 10, 100, 1000, 10000]
+  random_seed: 42
+  targets:
+    - tlx_mental_demand
+    - tlx_temporal_demand
+    - tlx_performance
+    - tlx_effort
+    - tlx_frustration
+    - tlx_mean
+
+data:
+  output_dir: "data/"
+  models_dir: "models/"
+  input_events_file: "data/input_events.jsonl"
+  session_dataset_file: "data/session_dataset.jsonl"
+  mini_tlx_file: "data/mini_tlx_labels.jsonl"

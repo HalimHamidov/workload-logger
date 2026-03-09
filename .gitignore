@@ -1,0 +1,22 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Generated data — never commit participant data
+data/*.jsonl
+data/*.csv
+
+# Trained models — can be regenerated
+models/*.pkl
+models/*.csv
+
+# IDE
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+desktop.ini
